@@ -1,0 +1,15 @@
+{
+  "name": "pixi",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "svelte-convert": "^1.0.1"
+  }
+}
