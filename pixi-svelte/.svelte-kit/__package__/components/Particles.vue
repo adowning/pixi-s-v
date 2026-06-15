@@ -1,5 +1,5 @@
-<script lang="ts" module>
-	import * as PIXI from 'pixi.js';
+<script lang="ts">
+import * as PIXI from 'pixi.js';
 
 	export type Props = {
 		key: string;
@@ -9,14 +9,15 @@
 	};
 </script>
 
-<script lang="ts">
-	import type { LoadedSprite } from '../types';
-	import { getContextApp, getContextParticleParent } from '../context.svelte';
+<script setup lang="ts">
+import { watchEffect, onMounted, onUnmounted, inject, provide, computed } from 'vue';
 
-	const props: Props = $props();
-	const context = getContextApp();
-	const particleContainer = getContextParticleParent();
-	const texture = $derived(
+	import type { LoadedSprite } from '../types';
+
+	const props = defineProps<Props>();
+	const context = inject<any>('appContext');
+	const particleContainer = inject<any>('particleParentContext');
+	const texture = computed(() =>
 		(context.stateApp.loadedAssets?.[props.key] || PIXI.Texture.EMPTY) as LoadedSprite,
 	);
 
@@ -35,7 +36,5 @@
 	}
 </script>
 
-{#if texture === PIXI.Texture.EMPTY}
-	{console.error(`Particle: key "${props.key}" is not found in the loadedAssets`)}
-	{console.log('loadedAssets', $state.snapshot(context.stateApp).loadedAssets)}
-{/if}
+<template>
+</template>

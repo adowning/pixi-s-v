@@ -1,19 +1,19 @@
-<script lang="ts">
-	import type { Snippet } from 'svelte';
-	import * as PIXI from 'pixi.js';
+<script setup lang="ts">
+import { watchEffect, onMounted, onUnmounted, inject, provide, computed , ref } from 'vue';
 
-	import { getContextApp } from '../context.svelte';
-	import { getProcessed } from '../assetLoad';
+		import * as PIXI from 'pixi.js';
+
+		import { getProcessed } from '../assetLoad';
 	import type { LoadedAssets, RawAsset } from '../types';
 
-	type Props = { children: Snippet };
 
-	const props: Props = $props();
-	const context = getContextApp();
 
-	let preLoaded = $state(false);
 
-	const assetNameList = $derived(
+	const context = inject<any>('appContext');
+
+	let preLoaded = ref(false);
+
+	const assetNameList = computed(() =>
 		context.stateApp.assets
 			? Object.keys(context.stateApp.assets).filter(
 					(key) => Boolean(context.stateApp.assets?.[key].preload) === false,
@@ -21,7 +21,7 @@
 			: [],
 	);
 
-	const preAssetNameList = $derived(
+	const preAssetNameList = computed(() =>
 		context.stateApp.assets
 			? Object.keys(context.stateApp.assets).filter(
 					(key) => context.stateApp.assets?.[key].preload === true,
@@ -32,9 +32,9 @@
 	let counter = 0;
 
 	const onProgress = (value: number) => {
-		if (preLoaded && value === 1) {
+		if (preLoaded.value && value === 1) {
 			counter = counter + 1;
-			const ratio = counter / assetNameList.length;
+			const ratio = counter / assetNameList.value.length;
 			context.stateApp.loadingProgress = ratio * 100;
 		}
 	};
@@ -64,23 +64,23 @@
 		);
 	};
 
-	$effect(() => {
-		if (!preLoaded) {
+	watchEffect(() => {
+		if (!preLoaded.value) {
 			(async () => {
-				if (preAssetNameList.length > 0) {
-					const preLoadedAssets = await loadAssets(preAssetNameList);
+				if (preAssetNameList.value.length > 0) {
+					const preLoadedAssets = await loadAssets(preAssetNameList.value);
 					if (preLoadedAssets) context.stateApp.loadedAssets = preLoadedAssets;
 				}
-				preLoaded = true;
+				preLoaded.value = true;
 			})();
 		}
 	});
 
-	$effect(() => {
-		if (!context.stateApp.loaded && preLoaded) {
+	watchEffect(() => {
+		if (!context.stateApp.loaded && preLoaded.value) {
 			(async () => {
-				if (assetNameList.length > 0) {
-					const postLoadedAssets = await loadAssets(assetNameList);
+				if (assetNameList.value.length > 0) {
+					const postLoadedAssets = await loadAssets(assetNameList.value);
 					if (postLoadedAssets)
 						context.stateApp.loadedAssets = {
 							...context.stateApp.loadedAssets,
@@ -93,6 +93,8 @@
 	});
 </script>
 
-{#if preLoaded}
-	{@render props.children()}
-{/if}
+<template>
+<template v-if="preLoaded">
+	<slot />
+</template>
+</template>

@@ -1,18 +1,17 @@
-<script lang="ts">
-	import * as PIXI from 'pixi.js';
-	import { onMount, onDestroy, type Snippet } from 'svelte';
-	import { devicePixelRatio } from 'svelte/reactivity/window';
+<script setup lang="ts">
+import { watchEffect, onMounted, onUnmounted, inject, provide, computed, ref } from 'vue';
+import * as PIXI from 'pixi.js';
+		const devicePixelRatio = { current: typeof window !== 'undefined' ? window.devicePixelRatio : 1 };
 
-	import { getContextApp } from '../context.svelte';
-	import { preloadFont } from '../utils.svelte';
+		import { preloadFont } from '../utils.svelte';
 
-	type Props = { children: Snippet };
 
-	const props: Props = $props();
-	const context = getContextApp();
 
-	let wrap: HTMLDivElement;
-	let initialised = $state(false);
+
+	const context = inject<any>('appContext');
+
+	const wrap = ref<HTMLDivElement | null>(null);
+	let initialised = ref(false);
 
 	const initialiseApplication = async () => {
 		PIXI.Assets.reset();
@@ -28,35 +27,37 @@
 			clearBeforeRender: true,
 			preference: 'webgpu',
 			powerPreference: 'high-performance',
-			resolution: devicePixelRatio.current,
+			resolution: (typeof window !== 'undefined' ? window.devicePixelRatio : 1),
 			resizeTo: window,
 		});
 
-		wrap.appendChild(context.stateApp.pixiApplication.canvas);
+		wrap.value?.appendChild(context.stateApp.pixiApplication.canvas);
 
 		// to prevent that you can't scroll the page with touch on the canvas. https://github.com/pixijs/pixijs/issues/4824
 		context.stateApp.pixiApplication.renderer.events.autoPreventDefault = false;
 		context.stateApp.pixiApplication.renderer.canvas.style.touchAction = 'auto';
 	};
 
-	onMount(async () => {
+	onMounted(async () => {
 		try {
-			if (!initialised) await initialiseApplication();
-			initialised = true;
+			if (!initialised.value) await initialiseApplication();
+			initialised.value = true;
 		} catch (error) {
 			console.error(error);
 		}
 	});
 
-	onDestroy(() => {
+	onUnmounted(() => {
 		if (context.stateApp.pixiApplication) {
 			context.stateApp.pixiApplication.destroy();
 		}
 	});
 </script>
 
-<div bind:this={wrap}>
-	{#if initialised}
-		{@render props.children()}
-	{/if}
+<template>
+<div ref="wrap">
+	<template v-if="initialised">
+		<slot />
+	</template>
 </div>
+</template>

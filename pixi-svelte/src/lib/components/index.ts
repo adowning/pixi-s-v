@@ -1,5 +1,5 @@
 import App from './App.svelte';
-import Text, { type Props as TextProps } from './Text.svelte';
+import Text, { type Props as TextProps } from './Text.vue';
 import Container, { type Props as ContainerProps } from './Container.svelte';
 import Rectangle, { type Props as RectangleProps } from './Rectangle.svelte';
 import Circle, { type Props as CircleProps } from './Circle.svelte';
