@@ -1,3 +1,3 @@
-import { preview } from 'config-storybook';
+import { preview } from "config-storybook";
 
 export default preview;
