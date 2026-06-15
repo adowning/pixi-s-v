@@ -1,5 +1,25 @@
 {
-	"extends": "config-ts/base.json",
-	"include": ["."],
-	"exclude": ["dist", "build", "node_modules"]
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": false,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "utils-layout": ["../../utils-layout/src/index.ts"],
+      "utils-resize-observer": ["../../utils-resize-observer/src/index.ts"],
+      "utils-shared/*": ["../../utils-shared/src/*"],
+      "utils-event-emitter": ["../../utils-event-emitter/src/index.ts"],
+      "state-shared": ["../../state-shared/src/index.ts"],
+      "components-shared": ["../../components-shared/src/index.ts"],
+      "constants-shared/*": ["../../constants-shared/src/*"],
+      "envs": ["../../envs/src/index.ts"]
+    }
+  },
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
 }
