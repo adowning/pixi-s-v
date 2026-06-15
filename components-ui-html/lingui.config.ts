@@ -1,3 +1,3 @@
-import config from 'config-lingui';
+import config from "config-lingui";
 
 export default config;

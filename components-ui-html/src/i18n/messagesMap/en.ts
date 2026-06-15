@@ -1,3 +1,3 @@
 export default {
-	'MASTER VOLUME': 'MASTER VOLUME',
+  "MASTER VOLUME": "MASTER VOLUME",
 };

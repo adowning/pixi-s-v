@@ -1,0 +1,57 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import { getContextLayout } from "utils-layout";
+import { stateUi, AUTO_SPINS_TEXT_OPTIONS } from "state-shared";
+import { OptionsGrid } from "components-shared";
+
+import BaseIcon from "./BaseIcon.vue";
+import BaseButtonContent from "./BaseButtonContent.vue";
+
+const { stateLayoutDerived } = getContextLayout();
+const AUTO_SPINS_TEXT_OPTIONS_PORTRAIT = AUTO_SPINS_TEXT_OPTIONS.filter(
+  (value) => value !== "1000",
+);
+
+const options = computed(() =>
+  stateLayoutDerived.layoutType() === "landscape"
+    ? AUTO_SPINS_TEXT_OPTIONS_PORTRAIT
+    : AUTO_SPINS_TEXT_OPTIONS,
+);
+</script>
+
+<template>
+  <OptionsGrid
+    :value="stateUi.autoSpinsText"
+    :options="options"
+    @change="(value) => (stateUi.autoSpinsText = value)"
+  >
+    <template #option="{ option }">
+      <BaseIcon
+        width="100%"
+        height="2rem"
+        :border="
+          option === stateUi.autoSpinsText
+            ? '2px white solid'
+            : '2px black solid'
+        "
+      />
+      <BaseButtonContent>
+        <span
+          style="font-size: 1rem"
+          :class="{ infinity: option === '∞' }"
+          data-test="round-options"
+        >
+          {{ option }}
+        </span>
+      </BaseButtonContent>
+    </template>
+  </OptionsGrid>
+</template>
+
+<style lang="scss">
+.infinity {
+  font-size: 1.5rem;
+  line-height: 1rem;
+  margin-top: 0.3rem;
+}
+</style>
