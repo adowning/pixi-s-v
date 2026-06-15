@@ -4,12 +4,18 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@typescript-eslint/parser": "^8.61.0",
+    "eslint-plugin-vue": "^10.9.2",
+    "vue-tsc": "^3.3.5"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^6.0.3"
   },
   "dependencies": {
-    "svelte-convert": "^1.0.1"
+    "@vue/compiler-sfc": "^3.5.38",
+    "svelte-convert": "^1.0.1",
+    "vue": "^3.5.38",
+    "vue3-pixi": "^1.0.1"
   }
 }
