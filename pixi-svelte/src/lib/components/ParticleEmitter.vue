@@ -1,3 +1,7 @@
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/ParticleEmitter.vue
+<script lang="ts">
+import {
+=======
 <template>
 
 </template>
@@ -6,6 +10,7 @@
 	import { computed, ref, watchEffect, toRefs } from "vue";
 
 	import {
+>>>>>>> master:pixi-svelte/src/lib/components/ParticleEmitter.vue
 		Emitter,
 		upgradeConfig,
 		type EmitterConfigV3,
@@ -20,6 +25,33 @@
 		emitSpeed?: number;
 		config: EmitterConfigV3 | EmitterConfigV2 | EmitterConfigV1;
 	};
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/ParticleEmitter.vue
+</script>
+
+<script setup lang="ts">
+import { watchEffect, onMounted, onUnmounted, inject, provide, computed } from 'vue';
+
+	const props = defineProps<Props>();
+	const context = inject<any>('appContext');
+	const parentContext = inject<any>('parentContext');
+	const textures = computed(() => context.stateApp.loadedAssets?.[props.key] as LoadedSpriteSheet);
+	const updatedConfig = computed(() => upgradeConfig(props.config, textures.value));
+		const emitter = new Emitter(parentContext.parent, updatedConfig.value);
+
+	watchEffect(() => {
+		let targetInstance = typeof emitter === 'function' ? emitter() : emitter;
+		if (targetInstance) {
+			Object.keys(props).filter(key => !['emit'].includes(key)).forEach(key => {
+				if (props[key] !== undefined) {
+					targetInstance[key] = props[key];
+				}
+			});
+		}
+	});
+
+	watchEffect(() => {
+		if (props.emit) emitter.init(updatedConfig.value);
+=======
 
 
 
@@ -38,6 +70,7 @@
 
 	watchEffect(() => {
 		if (props.emit) emitter.init(updatedConfig);
+>>>>>>> master:pixi-svelte/src/lib/components/ParticleEmitter.vue
 	});
 
 	if (context.stateApp.pixiApplication) {
@@ -54,5 +87,9 @@
 		emitter.emit = false;
 		emitter.destroy();
 	});
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/ParticleEmitter.vue
+</script>
+=======
 
 </script>
+>>>>>>> master:pixi-svelte/src/lib/components/ParticleEmitter.vue

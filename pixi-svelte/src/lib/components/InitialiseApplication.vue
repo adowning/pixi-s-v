@@ -1,3 +1,19 @@
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/InitialiseApplication.vue
+<script setup lang="ts">
+import { watchEffect, onMounted, onUnmounted, inject, provide, computed, ref } from 'vue';
+import * as PIXI from 'pixi.js';
+		const devicePixelRatio = { current: typeof window !== 'undefined' ? window.devicePixelRatio : 1 };
+
+		import { preloadFont } from '../utils.svelte';
+
+
+
+
+	const context = inject<any>('appContext');
+
+	const wrap = ref<HTMLDivElement | null>(null);
+	let initialised = ref(false);
+=======
 <template>
 <div bind:this=:wrap="wrap">
 	<template v-if="initialised">
@@ -23,6 +39,7 @@
 
 	let wrap: HTMLDivElement;
 	const initialised = ref(false);
+>>>>>>> master:pixi-svelte/src/lib/components/InitialiseApplication.vue
 
 	const initialiseApplication = async () => {
 		PIXI.Assets.reset();
@@ -38,11 +55,11 @@
 			clearBeforeRender: true,
 			preference: 'webgpu',
 			powerPreference: 'high-performance',
-			resolution: devicePixelRatio.current,
+			resolution: (typeof window !== 'undefined' ? window.devicePixelRatio : 1),
 			resizeTo: window,
 		});
 
-		wrap.appendChild(context.stateApp.pixiApplication.canvas);
+		wrap.value?.appendChild(context.stateApp.pixiApplication.canvas);
 
 		// to prevent that you can't scroll the page with touch on the canvas. https://github.com/pixijs/pixijs/issues/4824
 		context.stateApp.pixiApplication.renderer.events.autoPreventDefault = false;
@@ -51,8 +68,8 @@
 
 	onMounted(async () => {
 		try {
-			if (!initialised) await initialiseApplication();
-			initialised = true;
+			if (!initialised.value) await initialiseApplication();
+			initialised.value = true;
 		} catch (error) {
 			console.error(error);
 		}
@@ -64,4 +81,14 @@
 		}
 	});
 
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/InitialiseApplication.vue
+<template>
+<div ref="wrap">
+	<template v-if="initialised">
+		<slot />
+	</template>
+</div>
+</template>
+=======
 </script>
+>>>>>>> master:pixi-svelte/src/lib/components/InitialiseApplication.vue

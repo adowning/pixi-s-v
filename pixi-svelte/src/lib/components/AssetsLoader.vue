@@ -1,3 +1,20 @@
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/AssetsLoader.vue
+<script setup lang="ts">
+import { watchEffect, onMounted, onUnmounted, inject, provide, computed , ref } from 'vue';
+
+		import * as PIXI from 'pixi.js';
+
+		import { getProcessed } from '../assetLoad';
+	import type { LoadedAssets, RawAsset } from '../types';
+
+
+
+
+	const context = inject<any>('appContext');
+
+	let preLoaded = ref(false);
+
+=======
 <template>
 <template v-if="preLoaded">
 	<slot />
@@ -21,6 +38,7 @@
 
 	const preLoaded = ref(false);
 
+>>>>>>> master:pixi-svelte/src/lib/components/AssetsLoader.vue
 	const assetNameList = computed(() =>
 		context.stateApp.assets
 			? Object.keys(context.stateApp.assets).filter(
@@ -40,9 +58,9 @@
 	let counter = 0;
 
 	const onProgress = (value: number) => {
-		if (preLoaded && value === 1) {
+		if (preLoaded.value && value === 1) {
 			counter = counter + 1;
-			const ratio = counter / assetNameList.length;
+			const ratio = counter / assetNameList.value.length;
 			context.stateApp.loadingProgress = ratio * 100;
 		}
 	};
@@ -73,22 +91,30 @@
 	};
 
 	watchEffect(() => {
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/AssetsLoader.vue
+		if (!preLoaded.value) {
+=======
 		if (!preLoaded) {
+>>>>>>> master:pixi-svelte/src/lib/components/AssetsLoader.vue
 			(async () => {
-				if (preAssetNameList.length > 0) {
-					const preLoadedAssets = await loadAssets(preAssetNameList);
+				if (preAssetNameList.value.length > 0) {
+					const preLoadedAssets = await loadAssets(preAssetNameList.value);
 					if (preLoadedAssets) context.stateApp.loadedAssets = preLoadedAssets;
 				}
-				preLoaded = true;
+				preLoaded.value = true;
 			})();
 		}
 	});
 
 	watchEffect(() => {
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/AssetsLoader.vue
+		if (!context.stateApp.loaded && preLoaded.value) {
+=======
 		if (!context.stateApp.loaded && preLoaded) {
+>>>>>>> master:pixi-svelte/src/lib/components/AssetsLoader.vue
 			(async () => {
-				if (assetNameList.length > 0) {
-					const postLoadedAssets = await loadAssets(assetNameList);
+				if (assetNameList.value.length > 0) {
+					const postLoadedAssets = await loadAssets(assetNameList.value);
 					if (postLoadedAssets)
 						context.stateApp.loadedAssets = {
 							...context.stateApp.loadedAssets,
@@ -100,4 +126,12 @@
 		}
 	});
 
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/AssetsLoader.vue
+<template>
+<template v-if="preLoaded">
+	<slot />
+</template>
+</template>
+=======
 </script>
+>>>>>>> master:pixi-svelte/src/lib/components/AssetsLoader.vue

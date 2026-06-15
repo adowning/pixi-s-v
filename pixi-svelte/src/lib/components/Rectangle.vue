@@ -1,3 +1,7 @@
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/Rectangle.vue
+<script lang="ts">
+import * as PIXI from 'pixi.js';
+=======
 <template>
 <Graphics
 	v-bind="graphicsProps"
@@ -21,6 +25,7 @@
 	import { computed, ref, watchEffect, toRefs } from "vue";
 
 	import * as PIXI from 'pixi.js';
+>>>>>>> master:pixi-svelte/src/lib/components/Rectangle.vue
 
 	import { type Props as BaseProps } from './Graphics.vue';
 	import type { PixiPoint } from '../types';
@@ -37,6 +42,40 @@
 		borderWidth?: PIXI.StrokeStyle['width'];
 		borderAlpha?: PIXI.StrokeStyle['alpha'];
 	};
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/Rectangle.vue
+</script>
+
+<script setup lang="ts">
+import { watchEffect, onMounted, onUnmounted, inject, provide, computed } from 'vue';
+
+	import Graphics from './Graphics.vue';
+	import { anchorToPivot } from '../utils.svelte';
+
+	const props = defineProps<Props>();
+	const graphicsProps = computed(() => {
+		const { anchor, width, height, borderRadius, backgroundColor, backgroundAlpha, borderColor, borderWidth, borderAlpha, ...rest} = props;
+		return rest;
+	});
+</script>
+
+<template>
+<Graphics
+	v-bind="graphicsProps"
+	:pivot="anchorToPivot({ anchor: props.anchor, sizes: { width: props.width, height: props.height } })"
+	:draw="(graphics) => {
+		graphics.roundRect(0, 0, props.width, props.height, props.borderRadius ?? 0);
+		graphics.fill({
+			color: props.backgroundColor ?? 0x000000,
+			alpha: props.backgroundAlpha ?? 1,
+		});
+		graphics.stroke({
+			color: props.borderColor ?? 0x000000,
+			width: props.borderWidth ?? 0,
+			alpha: props.borderAlpha ?? 1,
+		});
+	}"/>
+</template>
+=======
 
 
 	import Graphics from './Graphics.vue';
@@ -56,3 +95,4 @@
 	 } = toRefs(props);
 
 </script>
+>>>>>>> master:pixi-svelte/src/lib/components/Rectangle.vue

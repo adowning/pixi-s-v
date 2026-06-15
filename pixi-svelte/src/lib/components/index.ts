@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+import App from './App.svelte';
+import Text, { type Props as TextProps } from './Text.vue';
+import Container, { type Props as ContainerProps } from './Container.svelte';
+import Rectangle, { type Props as RectangleProps } from './Rectangle.svelte';
+import Circle, { type Props as CircleProps } from './Circle.svelte';
+import Graphics, { type Props as GraphicsProps } from './Graphics.svelte';
+import AnimatedSprite, { type Props as AnimatedSpriteProps } from './AnimatedSprite.svelte';
+import SpriteSheet, { type Props as SpriteSheetProps } from './SpriteSheet.svelte';
+import Sprite, { type Props as SpriteProps } from './Sprite.svelte';
+import BaseSprite, { type Props as BaseSpriteProps } from './BaseSprite.svelte';
+=======
 import App from './App';
 import Text, { type Props as TextProps } from './Text';
 import Container, { type Props as ContainerProps } from './Container';
@@ -8,6 +20,7 @@ import AnimatedSprite, { type Props as AnimatedSpriteProps } from './AnimatedSpr
 import SpriteSheet, { type Props as SpriteSheetProps } from './SpriteSheet';
 import Sprite, { type Props as SpriteProps } from './Sprite';
 import BaseSprite, { type Props as BaseSpriteProps } from './BaseSprite';
+>>>>>>> master
 import BaseSpineProvider, {
 	type Props as BaseSpineProviderProps,
 } from './BaseSpineProvider';

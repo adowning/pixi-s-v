@@ -1,3 +1,7 @@
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/AnimatedSprite.vue
+<script lang="ts">
+import * as PIXI from 'pixi.js';
+=======
 <template>
 
 </template>
@@ -6,6 +10,7 @@
 	import { computed, ref, watchEffect, toRefs } from "vue";
 
 	import * as PIXI from 'pixi.js';
+>>>>>>> master:pixi-svelte/src/lib/components/AnimatedSprite.vue
 
 	import type { OverwriteCursor } from '../types';
 
@@ -14,6 +19,29 @@
 		loop?: PIXI.AnimatedSprite['loop'];
 		play?: boolean;
 	};
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/AnimatedSprite.vue
+</script>
+
+<script setup lang="ts">
+import { watchEffect, onMounted, onUnmounted, inject, provide, computed } from 'vue';
+
+
+	const props = defineProps<Props>();
+
+	const parentContext = inject<any>('parentContext');
+	const animatedSprite = new PIXI.AnimatedSprite(props.textures ?? []);
+
+	watchEffect(() => {
+		let targetInstance = typeof animatedSprite === 'function' ? animatedSprite() : animatedSprite;
+		if (targetInstance) {
+			Object.keys(props).filter(key => !['play'].includes(key)).forEach(key => {
+				if (props[key] !== undefined) {
+					targetInstance[key] = props[key];
+				}
+			});
+		}
+	});
+=======
 
 
 	import { propsSyncEffect } from '../utils';
@@ -25,6 +53,7 @@
 	const animatedSprite = new PIXI.AnimatedSprite(props.textures ?? []);
 
 	propsSyncEffect({ props, target: animatedSprite, ignore: ['play'] });
+>>>>>>> master:pixi-svelte/src/lib/components/AnimatedSprite.vue
 
 	watchEffect(() => {
 		if (props.play) {
@@ -35,5 +64,9 @@
 	});
 
 	parentContext.addToParent(animatedSprite);
+<<<<<<< HEAD:pixi-svelte/.svelte-kit/__package__/components/AnimatedSprite.vue
+</script>
+=======
 
 </script>
+>>>>>>> master:pixi-svelte/src/lib/components/AnimatedSprite.vue
